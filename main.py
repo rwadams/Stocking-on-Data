@@ -7,9 +7,21 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
 
+def highlight(val):
+    if row['Up_or_Down'] == row['Predictions']:
+        color =  'green'
+    else:
+        color =  'white'
+
+    return ['background-color: {}'.format(color) for _ in row]
+
 def main():
-    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_train_data.csv")
-    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_test_data.csv")
+#    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_train_data.csv")
+#    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_test_data.csv")
+
+    traindata = pd.read_csv("MSFT_train_data.csv")
+    testdata = pd.read_csv("MSFT_test_data.csv")
+
     properties = list(traindata.columns.values)
     #properties.remove("Date")
     #properties.remove("Volume")
@@ -48,8 +60,16 @@ def main():
     predictions = model.predict_classes(testX)
     predProbs = model.predict(testX)
     #rounded = [round(x[0]) for x in predictions]
+
     print(predictions)
     #print(predProbs)
 
+    # add the column to the test data set
+    testdata['Predictions'] = predictions
+#    testdata.style.apply(highlight, axis=1)
+    testdata.to_csv("MSFT_output_data.csv")
+
 if __name__ == "__main__":
     main()
+
+
