@@ -14,9 +14,15 @@ def main():
     days_skipped_between = 15     # number of days between any two batches of stock data
     days_end_creation = 100       # number of days before current day removed
     percentage_for_testing = 3    # Percentage of data to be moved to test data
-    tickers = ["MSFT"]
     
-    for x in tickers:
+    
+    f = open("nasdaq_tickers.txt")
+    tickers = f.read()
+    f.close()
+    flag = 0
+    
+    for x in tickers.split(" "):
+        print(x)
         # gets the stock data for a given ticker
         ticker = yf.Ticker(x)
         hist = ticker.history(period="max")
@@ -35,33 +41,34 @@ def main():
                     days_of_data.append(sum(days_of_data)/days_recorded)
                     days_of_data.append(max(days_of_data))
                     days_of_data.append(min(days_of_data))
-                    # adds next day, if it went up as a 1, if it went down or stayed the same 0
-                    if price_history[start_day+j+1] > days_of_data[days_recorded-1]:
-                        days_of_data.append(1)
-                    else:
-                        days_of_data.append(0)
+                    # adds next day
+                    days_of_data.append(price_history[start_day+j+1])
+ 
             data.append(days_of_data)
             
         # writes data to a csv
-        f = open(x+"_test_data"+".csv","w+")
-        f2 = open(x+"_train_data"+".csv","w+")
+        f = open("test_data_prices"+".csv","a+")
+        f2 = open("train_data_prices"+".csv","a+")
         for j in range (0,len(data)):
             # Formats headers of csv files
-            if j == 0:
-                for k in range (0,days_recorded):
-                    f.write("day{},".format(k))
-                f.write("Average,Max,Min,Up_or_Down\n")
+            if flag == 0:
+                if j == 0:
+                    for k in range (0,days_recorded):
+                        f.write("day{},".format(k))
+                    f.write("Average,Max,Min,Value\n")
                 
-                for k in range (0,days_recorded):
-                    f2.write("day{},".format(k))
-                f2.write("Average,Max,Min,Up_or_Down\n")
+                    for k in range (0,days_recorded):
+                        f2.write("day{},".format(k))
+                    f2.write("Average,Max,Min,Value\n")
             
+            # writes data to test csv
             if j%percentage_for_testing == 1:
                 for k in range (0,days_recorded+4):
                     if k < days_recorded+3:
                         f.write("{},".format(data[j][k]))
                     else:
-                        f.write("{}\n".format(data[j][k]))    
+                        f.write("{}\n".format(data[j][k]))  
+            # writes data to training csv
             else:
                 for k in range (0,days_recorded+4):
                     if k < days_recorded+3:
@@ -69,6 +76,8 @@ def main():
                     else:
                         f2.write("{}\n".format(data[j][k]))
         f.close()
+        f2.close()
+        flag = 1
                 
     
     

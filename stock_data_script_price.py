@@ -36,10 +36,7 @@ def main():
                     days_of_data.append(max(days_of_data))
                     days_of_data.append(min(days_of_data))
                     # adds next day, if it went up as a 1, if it went down or stayed the same 0
-                    if price_history[start_day+j+1] > days_of_data[days_recorded-1]:
-                        days_of_data.append(1)
-                    else:
-                        days_of_data.append(0)
+                    days_of_data.append(price_history[start_day+j+1])
             data.append(days_of_data)
             
         # writes data to a csv
@@ -50,11 +47,11 @@ def main():
             if j == 0:
                 for k in range (0,days_recorded):
                     f.write("day{},".format(k))
-                f.write("Average,Max,Min,Up_or_Down\n")
+                f.write("Average,Max,Min,Value\n")
                 
                 for k in range (0,days_recorded):
                     f2.write("day{},".format(k))
-                f2.write("Average,Max,Min,Up_or_Down\n")
+                f2.write("Average,Max,Min,Value\n")
             
             if j%percentage_for_testing == 1:
                 for k in range (0,days_recorded+4):

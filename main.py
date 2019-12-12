@@ -11,20 +11,11 @@ def main():
     traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_train_data.csv")
     testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_test_data.csv")
     properties = list(traindata.columns.values)
-    #properties.remove("Date")
-    #properties.remove("Volume")
-    #properties.remove("Dividends")
-    #properties.remove("Stock Splits")
-    #properties.remove("Actual")
-    #properties.remove("Average")
     properties.remove("Up_or_Down")
     trainX = traindata[properties]
     trainY = traindata["Up_or_Down"]
     testX = testdata[properties]
     testY = testdata["Up_or_Down"]
-
-    #X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
-
    
     model = keras.Sequential([
         keras.layers.Flatten(input_shape=(13,)),
@@ -48,7 +39,7 @@ def main():
     predictions = model.predict_classes(testX)
     predProbs = model.predict(testX)
     #rounded = [round(x[0]) for x in predictions]
-    print(predictions)
+    #print(predictions)
     #print(predProbs)
 
 if __name__ == "__main__":
