@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import time
 
 def main():
-    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_train_data.csv")
-    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_test_data.csv")
+    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\AAPL_train_data.csv")
+    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\AAPL_test_data.csv")
     properties = list(traindata.columns.values)
     properties.remove("Value")
     trainX = traindata[properties]
@@ -26,7 +26,7 @@ def main():
 
     model.compile(optimizer='adam', loss='mse')
     
-    hist = model.fit(trainX, trainY, epochs=20, batch_size=1)
+    hist = model.fit(trainX, trainY, epochs=50, batch_size=1)
 
     #print(hist.history)
 

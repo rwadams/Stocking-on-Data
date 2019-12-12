@@ -14,7 +14,7 @@ def main():
     days_skipped_between = 15     # number of days between any two batches of stock data
     days_end_creation = 100       # number of days before current day removed
     percentage_for_testing = 3    # Percentage of data to be moved to test data
-    tickers = ["MSFT"]
+    tickers = ["AAPL"]
     
     for x in tickers:
         # gets the stock data for a given ticker

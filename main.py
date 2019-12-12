@@ -8,8 +8,8 @@ import numpy as np
 import pandas as pd
 
 def main():
-    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_train_data.csv")
-    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\MSFT_test_data.csv")
+    traindata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\AAPL_train_data.csv")
+    testdata = pd.read_csv(r"C:\Users\rwadams\Documents\GitHub_Files\Stocking-on-Data\AAPL_test_data.csv")
     properties = list(traindata.columns.values)
     properties.remove("Up_or_Down")
     trainX = traindata[properties]
